@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">D-Player</string>
     <string name="action_settings">Settings</string>
+    <string name="back"><![CDATA[<]]></string>
+    <string name="rewind"><![CDATA[<<]]></string>
+    <string name="forward"><![CDATA[>>]]></string>
+    <string name="next"><![CDATA[>]]></string>
+    <string name="pause">||</string>
 </resources>
