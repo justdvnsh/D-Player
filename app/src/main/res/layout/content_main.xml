@@ -18,7 +18,7 @@
         android:layout_marginBottom="21dp"
         android:background="@drawable/buttons"
         android:text="@string/back"
-        android:textColor="#fa71cd"
+        android:textColor="#E91E63"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -32,21 +32,22 @@
         android:layout_marginLeft="60dp"
         android:background="@drawable/buttons"
         android:text="@string/rewind"
-        android:textColor="#fa71cd"
+        android:textColor="#E91E63"
         app:layout_constraintBottom_toBottomOf="@+id/button"
         app:layout_constraintStart_toStartOf="@+id/button"
         app:layout_constraintTop_toTopOf="@+id/button"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/play"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:layout_marginStart="72dp"
         android:layout_marginLeft="72dp"
         android:background="@drawable/buttons"
-        android:text="@string/pause"
-        android:textColor="#fa71cd"
+        android:onClick="playMusic"
+        android:text="@string/play"
+        android:textColor="#E91E63"
         app:layout_constraintBottom_toBottomOf="@+id/button4"
         app:layout_constraintStart_toStartOf="@+id/button4"
         app:layout_constraintTop_toTopOf="@+id/button4"
@@ -60,10 +61,10 @@
         android:layout_marginLeft="100dp"
         android:background="@drawable/buttons"
         android:text="@string/next"
-        android:textColor="#fa71cd"
-        app:layout_constraintBottom_toBottomOf="@+id/button5"
-        app:layout_constraintStart_toStartOf="@+id/button5"
-        app:layout_constraintTop_toTopOf="@+id/button5"
+        android:textColor="#E91E63"
+        app:layout_constraintBottom_toBottomOf="@+id/play"
+        app:layout_constraintStart_toStartOf="@+id/play"
+        app:layout_constraintTop_toTopOf="@+id/play"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
@@ -74,7 +75,7 @@
         android:layout_marginLeft="68dp"
         android:background="@drawable/buttons"
         android:text="@string/forward"
-        android:textColor="#fa71cd"
+        android:textColor="#E91E63"
         app:layout_constraintBottom_toBottomOf="@+id/button6"
         app:layout_constraintEnd_toEndOf="@+id/button6"
         app:layout_constraintHorizontal_bias="0.117"
@@ -82,41 +83,78 @@
         app:layout_constraintTop_toTopOf="@+id/button6"
         app:layout_constraintVertical_bias="0.0" />
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="423dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginBottom="3dp"
+    <Button
+        android:id="@+id/repeat"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/buttons"
-        android:textColor="#fa71cd"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="@+id/button"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/button"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@android:drawable/ic_menu_revert" />
+        android:textColor="#E91E63"
+        android:text="R"
+        app:layout_constraintBottom_toTopOf="@+id/seekBar"
+        app:layout_constraintStart_toStartOf="@+id/seekBar"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+         />
+
+    <Button
+        android:id="@+id/shuffle"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="159dp"
+        android:layout_marginLeft="159dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginRight="9dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/buttons"
+        android:text="S"
+        android:textColor="#E91E63"
+        app:layout_constraintBottom_toTopOf="@+id/seekBar"
+        app:layout_constraintEnd_toEndOf="@+id/seekBar"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/repeat"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="41dp"
         android:layout_height="24dp"
-        android:layout_marginStart="300dp"
-        android:layout_marginLeft="300dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginBottom="8dp"
         android:text="04:56"
-        app:layout_constraintStart_toStartOf="@+id/imageButton"
-        app:layout_constraintTop_toTopOf="@+id/imageButton" />
+        app:layout_constraintBottom_toTopOf="@+id/button7"
+        app:layout_constraintStart_toEndOf="@+id/seekBar"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="41dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginEnd="354dp"
+        android:layout_marginRight="354dp"
+        android:layout_marginBottom="8dp"
+        android:text="00:01"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
     <ScrollView
-        android:layout_width="404dp"
-        android:layout_height="373dp"
+        android:id="@+id/scrollView2"
+        android:layout_width="403dp"
+        android:layout_height="385dp"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="113dp"
-        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintBottom_toTopOf="@+id/play"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
@@ -128,5 +166,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
     </ScrollView>
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="249dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginBottom="11dp"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

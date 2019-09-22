@@ -6,4 +6,5 @@
     <string name="forward"><![CDATA[>>]]></string>
     <string name="next"><![CDATA[>]]></string>
     <string name="pause">||</string>
+    <string name="play">|></string>
 </resources>

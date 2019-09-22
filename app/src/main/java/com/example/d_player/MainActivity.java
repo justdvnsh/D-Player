@@ -13,27 +13,29 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.MediaController;
+import android.widget.ToggleButton;
 import android.widget.VideoView;
 
 public class MainActivity extends AppCompatActivity {
 
     MediaPlayer mediaPlayer;
+//    Button playPause = findViewById(R.id.play);
 
-    public void play(View view) {
+    public void playMusic(View view) {
 
-        mediaPlayer.start();
+       Button playPause = findViewById(R.id.play);
 
+       if (!mediaPlayer.isPlaying()) {
+           mediaPlayer.start();
+           playPause.setText(R.string.pause);
+       } else {
+           mediaPlayer.pause();
+           playPause.setText(R.string.play);
+       }
 
     }
-
-    public void pause(View view) {
-
-        mediaPlayer.pause();
-
-
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.vocal);
+        mediaPlayer = MediaPlayer.create(this, R.raw.fast_foot);
     }
 
     @Override
