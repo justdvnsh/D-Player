@@ -92,12 +92,11 @@
         android:layout_marginTop="14dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/buttons"
-        android:textColor="#E91E63"
         android:text="R"
+        android:textColor="#E91E63"
         app:layout_constraintBottom_toTopOf="@+id/seekBar"
         app:layout_constraintStart_toStartOf="@+id/seekBar"
-        app:layout_constraintTop_toBottomOf="@+id/scroll"
-         />
+        app:layout_constraintTop_toBottomOf="@+id/listview1" />
 
     <Button
         android:id="@+id/shuffle"
@@ -116,67 +115,81 @@
         app:layout_constraintEnd_toEndOf="@+id/seekBar"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/repeat"
-        app:layout_constraintTop_toBottomOf="@+id/scroll"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/listview1" />
+
+    <!--    <ScrollView-->
+    <!--        android:id="@+id/scroll"-->
+    <!--        android:layout_width="403dp"-->
+    <!--        android:layout_height="385dp"-->
+    <!--        android:layout_marginTop="2dp"-->
+    <!--        android:layout_marginBottom="113dp"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/play"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.571"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintVertical_bias="0.0">-->
+
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="fill_parent"-->
+    <!--            android:layout_height="fill_parent"-->
+    <!--            android:orientation="vertical">-->
+
+    <!--            -->
+    <!--        </LinearLayout>-->
+    <!--    </ScrollView>-->
 
     <TextView
         android:id="@+id/duration"
         android:layout_width="41dp"
         android:layout_height="24dp"
-        android:layout_marginTop="47dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="16dp"
         android:text="04:56"
         app:layout_constraintBottom_toTopOf="@+id/next"
         app:layout_constraintStart_toEndOf="@+id/seekBar"
-        app:layout_constraintTop_toBottomOf="@+id/scroll"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/seekBar"
+        app:layout_constraintVertical_bias="0.142" />
 
     <TextView
         android:id="@+id/currentDuration"
         android:layout_width="41dp"
         android:layout_height="24dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="47dp"
-        android:layout_marginEnd="354dp"
-        android:layout_marginRight="354dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:text="00:00"
         app:layout_constraintBottom_toTopOf="@+id/previous"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scroll" />
-
-    <ScrollView
-        android:id="@+id/scroll"
-        android:layout_width="403dp"
-        android:layout_height="385dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="113dp"
-        app:layout_constraintBottom_toTopOf="@+id/play"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.571"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <ListView
-            android:id="@+id/listview1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="20dp" />
-    </ScrollView>
+        app:layout_constraintEnd_toEndOf="@+id/previous"
+        app:layout_constraintStart_toStartOf="@+id/previous"
+        app:layout_constraintTop_toBottomOf="@+id/listview1" />
 
     <SeekBar
         android:id="@+id/seekBar"
         android:layout_width="249dp"
         android:layout_height="21dp"
-        android:layout_marginTop="47dp"
-        android:layout_marginBottom="11dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/previous"
         app:layout_constraintStart_toEndOf="@+id/currentDuration"
-        app:layout_constraintTop_toBottomOf="@+id/scroll"
+        app:layout_constraintTop_toTopOf="@+id/currentDuration"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ListView
+        android:id="@+id/listview1"
+        android:layout_width="404dp"
+        android:layout_height="376dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="227dp"
+        android:padding="20dp"
+        android:paddingTop="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

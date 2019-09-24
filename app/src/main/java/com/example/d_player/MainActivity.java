@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -28,12 +29,14 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.ScrollView;
@@ -69,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
     ListView listView;
 
     List<String> ListElementsArrayList ;
+
+    List<String> SongsData ;
 
     ArrayAdapter<String> adapter ;
 
@@ -152,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
         contentResolver = context.getContentResolver();
 
-        uri = Uri.parse("internal/storage/self");
+        uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
 
         cursor = contentResolver.query(
                 uri, // Uri
@@ -173,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
 
+            int Data = cursor.getColumnIndex(MediaStore.Audio.Media.DATA);
             int Title = cursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
 
             //Getting Song ID From Cursor.
@@ -184,9 +190,11 @@ public class MainActivity extends AppCompatActivity {
                 //long SongID = cursor.getLong(id);
 
                 String SongTitle = cursor.getString(Title);
+                String SongData = cursor.getString(Data);
 
                 // Adding Media File Names to ListElementsArrayList.
                 ListElementsArrayList.add(SongTitle);
+                SongsData.add(SongData);
 
             } while (cursor.moveToNext());
         }
@@ -263,8 +271,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // getting the scrollview
-        ScrollView scroll = ( ScrollView ) findViewById(R.id.scroll);
+
+
+        // getting the listview
         listView = (ListView) findViewById(R.id.listview1);
 
         // getting all the media files from the phone
@@ -272,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
 
         ListElementsArrayList = new ArrayList<>(Arrays.asList(ListElements));
 
-        Log.i("MP3 FILES FOUND ARE", ListElementsArrayList.toString());
+        SongsData = new ArrayList<>(Arrays.asList(ListElements));
 
         adapter = new ArrayAdapter<String>
                 (MainActivity.this, android.R.layout.simple_list_item_1, ListElementsArrayList);
@@ -284,6 +293,11 @@ public class MainActivity extends AppCompatActivity {
         GetAllMediaMp3Files();
 
         listView.setAdapter(adapter);
+
+        Log.i("MP3 FILES FOUND ARE", ListElementsArrayList.toString());
+        Log.i("Length", Integer.toString(ListElementsArrayList.size()));
+        Log.i("MP3 Data FOUND ARE", SongsData.toString());
+        Log.i("Length", Integer.toString(SongsData.size()));
 
         // ListView on item selected listener.
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
