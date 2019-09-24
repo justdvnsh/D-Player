@@ -96,7 +96,7 @@
         android:text="R"
         app:layout_constraintBottom_toTopOf="@+id/seekBar"
         app:layout_constraintStart_toStartOf="@+id/seekBar"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintTop_toBottomOf="@+id/scroll"
          />
 
     <Button
@@ -116,7 +116,7 @@
         app:layout_constraintEnd_toEndOf="@+id/seekBar"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/repeat"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintTop_toBottomOf="@+id/scroll"
         />
 
     <TextView
@@ -128,7 +128,7 @@
         android:text="04:56"
         app:layout_constraintBottom_toTopOf="@+id/next"
         app:layout_constraintStart_toEndOf="@+id/seekBar"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintTop_toBottomOf="@+id/scroll"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -146,10 +146,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+        app:layout_constraintTop_toBottomOf="@+id/scroll" />
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/scroll"
         android:layout_width="403dp"
         android:layout_height="385dp"
         android:layout_marginTop="2dp"
@@ -161,10 +161,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-        <LinearLayout
+        <ListView
+            android:id="@+id/listview1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:layout_height="match_parent"
+            android:layout_margin="20dp" />
     </ScrollView>
 
     <SeekBar
@@ -175,7 +176,7 @@
         android:layout_marginBottom="11dp"
         app:layout_constraintBottom_toTopOf="@+id/previous"
         app:layout_constraintStart_toEndOf="@+id/currentDuration"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintTop_toBottomOf="@+id/scroll"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
