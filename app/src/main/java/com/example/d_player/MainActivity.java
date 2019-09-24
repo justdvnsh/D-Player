@@ -63,25 +63,25 @@ public class MainActivity extends AppCompatActivity {
     String totalDuration; // Creatng a total Duration method.
     Handler timerHandler = new Handler(); // making a new HandlerObject to handle time.
 
-    Context context;
+    Context context; // Context variable to get the current working context
 
-    public static final int RUNTIME_PERMISSION_CODE = 7;
+    public static final int RUNTIME_PERMISSION_CODE = 7; // Permissiom code for read_write permission
 
-    String[] ListElements = new String[] { };
+    String[] ListElements = new String[] { }; // Dynamic array of String
 
-    ListView listView;
+    ListView listView; // a list view var
 
-    List<String> ListElementsArrayList ;
+    List<String> ListElementsArrayList ; // List of String to store the songs
 
-    List<String> SongsData ;
+    List<String> SongsData ; // List of strings to store the full data path of the song
 
-    ArrayAdapter<String> adapter ;
+    ArrayAdapter<String> adapter ; // adapter to display the list elements in the list view
 
-    ContentResolver contentResolver;
+    ContentResolver contentResolver; // content resolver to query the storage system of the mobile
 
-    Cursor cursor;
+    Cursor cursor; // cursor to actually query
 
-    Uri uri;
+    Uri uri; // path resolver
 
     // Makeing the file variable and Array containing the files.
     private File root;
@@ -155,10 +155,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void GetAllMediaMp3Files(){
 
+        // content resolver
         contentResolver = context.getContentResolver();
 
+        // the internal storage of the path of the phone.
+        // Since I have all the music files in my internal storage.
         uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
 
+        // query all the files at the given uri ( path )
         cursor = contentResolver.query(
                 uri, // Uri
                 null,
@@ -178,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
 
+            // if cursor is populated, find the Title of the song and data.
             int Data = cursor.getColumnIndex(MediaStore.Audio.Media.DATA);
             int Title = cursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
 
@@ -201,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Creating Runtime permission function.
+    // Asks for permission on teh run time.
     public void AndroidRuntimePermission(){
 
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
@@ -279,17 +285,19 @@ public class MainActivity extends AppCompatActivity {
         // getting all the media files from the phone
         context = getApplicationContext();
 
+        // making the list into arrayList to display into the listview.
         ListElementsArrayList = new ArrayList<>(Arrays.asList(ListElements));
 
         SongsData = new ArrayList<>(Arrays.asList(ListElements));
 
+        // setting up the listview.
         adapter = new ArrayAdapter<String>
                 (MainActivity.this, android.R.layout.simple_list_item_1, ListElementsArrayList);
 
         // Requesting run time permission for Read External Storage.
         AndroidRuntimePermission();
 
-
+        // actually getting the song files.
         GetAllMediaMp3Files();
 
         listView.setAdapter(adapter);
@@ -305,8 +313,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                // TODO Auto-generated method stub
-                // Showing ListView Item Click Value using Toast.
+                // TODO Instead of showing the toast, set a click property to actually play the song.
+                // TODO For each song, get the file [ath of the song
+                // TODO Then set the datasource of the mediaplayer to that song.
+                // TODO Make the next and previous buttons work.
+                // TODO Make the Repeat and Shuffle buttons work.
 
                 Toast.makeText(MainActivity.this,parent.getAdapter().getItem(position).toString(),Toast.LENGTH_LONG).show();
 
