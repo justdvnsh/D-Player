@@ -63,7 +63,7 @@ import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity {
 
-    MediaPlayer mediaPlayer; // Creating a mediaPlayer Variable, which we will use in the onCreate method.
+    MediaPlayer mediaPlayer = null; // Creating a mediaPlayer Variable, which we will use in the onCreate method.
     String totalDuration; // Creatng a total Duration method.
     Handler timerHandler = new Handler(); // making a new HandlerObject to handle time.
 
@@ -305,10 +305,7 @@ public class MainActivity extends AppCompatActivity {
         {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                // TODO Instead of showing the toast, set a click property to actually play the song.
-                // TODO For each song, get the file [ath of the song
-                // TODO Then set the datasource of the mediaplayer to that song.
+                
                 // TODO Make the next and previous buttons work.
                 // TODO Make the Repeat and Shuffle buttons work.
 
@@ -318,11 +315,18 @@ public class MainActivity extends AppCompatActivity {
 
                     if ( s.contains(song) ) {
 
+                        if(mediaPlayer!=null)
+                        {
+                            mediaPlayer.release();
+                            mediaPlayer=null;
+                        }
+
                         mediaPlayer = new MediaPlayer();
                         try {
                             mediaPlayer.setDataSource(MainActivity.this , Uri.parse(s));
                             mediaPlayer.prepare();
                             mediaPlayer.start();
+                            timerHandler.postDelayed(updateTimer, 0);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -394,6 +398,8 @@ public class MainActivity extends AppCompatActivity {
                         // creating the forward and backward functionality.
                         Button forward = ( Button ) findViewById(R.id.forward);
                         Button backward = ( Button ) findViewById(R.id.backward);
+                        Button next = ( Button ) findViewById(R.id.next);
+                        Button previous = ( Button ) findViewById(R.id.previous);
 
                         forward.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -412,11 +418,6 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 }
-
-                Toast.makeText(MainActivity.this, context.getFilesDir().getAbsolutePath() + "/" + parent.getAdapter().getItem(position).toString(),Toast.LENGTH_LONG).show();
-
-
-
             }
         });
 
