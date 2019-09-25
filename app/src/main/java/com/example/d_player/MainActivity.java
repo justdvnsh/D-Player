@@ -50,12 +50,16 @@ import android.widget.VideoView;
 import org.w3c.dom.Text;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -82,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
     Cursor cursor; // cursor to actually query
 
     Uri uri; // path resolver
+
+    public static String path;
 
     // Makeing the file variable and Array containing the files.
     private File root;
@@ -113,25 +119,13 @@ public class MainActivity extends AppCompatActivity {
 
     };
 
-    // onClick method for the play&Pause button
-    public void playMusic(View view) {
-
-       Button playPause = findViewById(R.id.play);
-
-       // check if the music is playing
-       if (!mediaPlayer.isPlaying()) {
-           mediaPlayer.start();
-           playPause.setText(R.string.pause);
-           // send updates every second to update the text of the timer running .
-           timerHandler.postDelayed(updateTimer, 0);
-       } else {
-           mediaPlayer.pause();
-           playPause.setText(R.string.play);
-           // if music is paused , remove all callbacks and do not send any update.
-           timerHandler.removeCallbacks(updateTimer);
-       }
-
-    };
+//    // onClick method for the play&Pause button
+//    public void playMusic(View view) {
+//       Button playPause = findViewById(R.id.play);
+//
+//
+//
+//    };
 
     // a runnable type Object , which is actually the meat of the updating timer.
     private Runnable updateTimer = new Runnable() {
@@ -278,17 +272,16 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
+        // making the list into arrayList to display into the listview.
+        ListElementsArrayList = new ArrayList<>(Arrays.asList(ListElements));
+
+        SongsData = new ArrayList<>(Arrays.asList(ListElements));
 
         // getting the listview
         listView = (ListView) findViewById(R.id.listview1);
 
         // getting all the media files from the phone
         context = getApplicationContext();
-
-        // making the list into arrayList to display into the listview.
-        ListElementsArrayList = new ArrayList<>(Arrays.asList(ListElements));
-
-        SongsData = new ArrayList<>(Arrays.asList(ListElements));
 
         // setting up the listview.
         adapter = new ArrayAdapter<String>
@@ -319,19 +312,46 @@ public class MainActivity extends AppCompatActivity {
                 // TODO Make the next and previous buttons work.
                 // TODO Make the Repeat and Shuffle buttons work.
 
-                Toast.makeText(MainActivity.this,parent.getAdapter().getItem(position).toString(),Toast.LENGTH_LONG).show();
+                String song = parent.getAdapter().getItem(position).toString();
 
-            }
-        });
+                for ( String s: SongsData ) {
 
+                    if ( s.contains(song) ) {
 
+                        mediaPlayer = new MediaPlayer();
+                        try {
+                            mediaPlayer.setDataSource(MainActivity.this , Uri.parse(s));
+                            mediaPlayer.prepare();
+                            mediaPlayer.start();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
 
-        // create a media player object.
-        mediaPlayer = MediaPlayer.create(this, R.raw.fast_foot);
-        final SeekBar seekbar = ( SeekBar ) findViewById(R.id.seekBar);
-        // set the max of seekbar to the max duration of the song - as in upto where we can seek the
-        // seekbar.
-        seekbar.setMax(mediaPlayer.getDuration());
+                        final SeekBar seekbar = ( SeekBar ) findViewById(R.id.seekBar);
+                        // set the max of seekbar to the max duration of the song - as in upto where we can seek the
+                        // seekbar.
+                        seekbar.setMax(mediaPlayer.getDuration());
+                        seekbar.setProgress(0);
+                        final Button playPause = ( Button ) findViewById(R.id.play);
+                        playPause.setText("||");
+                        playPause.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                // check if the music is playing
+                                if (!mediaPlayer.isPlaying()) {
+                                    mediaPlayer.start();
+                                    playPause.setText(R.string.pause);
+                                    // send updates every second to update the text of the timer running .
+                                    timerHandler.postDelayed(updateTimer, 0);
+                                } else {
+                                    mediaPlayer.pause();
+                                    playPause.setText(R.string.play);
+                                    // if music is paused , remove all callbacks and do not send any update.
+                                    timerHandler.removeCallbacks(updateTimer);
+                                }
+                            }
+                        });
+
 
 //        //making a new timer object to update the seekbar every second and run a piece of code.
 //        new Timer().scheduleAtFixedRate(new TimerTask() {
@@ -344,50 +364,63 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        }, 0, 1000);// 0 -> starts immediately ; 1000 -> updates every second.
 
-        // setting up an onChangeListener.
-        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                        // setting up an onChangeListener.
+                        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekbar){}
+                            @Override
+                            public void onStartTrackingTouch(SeekBar seekbar){}
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar){}
+                            @Override
+                            public void onStopTrackingTouch(SeekBar seekBar){}
 
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                            @Override
+                            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                // the seek bar seeks to the current progress .
-                mediaPlayer.seekTo(progress);
+                                // the seek bar seeks to the current progress .
+                                mediaPlayer.seekTo(progress);
+
+                            }
+
+
+
+                        });
+
+                        totalDuration = milliSecondsToTimer(mediaPlayer.getDuration());
+
+                        TextView duration = ( TextView ) findViewById(R.id.duration);
+                        Log.i("Duration", totalDuration);
+                        duration.setText(totalDuration);
+
+                        // creating the forward and backward functionality.
+                        Button forward = ( Button ) findViewById(R.id.forward);
+                        Button backward = ( Button ) findViewById(R.id.backward);
+
+                        forward.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                seekbar.setProgress(mediaPlayer.getCurrentPosition() + 5000);
+                            }
+                        });
+
+                        backward.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                seekbar.setProgress(mediaPlayer.getCurrentPosition() - 5000);
+                            }
+                        });
+
+                    }
+
+                }
+
+                Toast.makeText(MainActivity.this, context.getFilesDir().getAbsolutePath() + "/" + parent.getAdapter().getItem(position).toString(),Toast.LENGTH_LONG).show();
+
+
 
             }
-
-
-
         });
 
-        totalDuration = milliSecondsToTimer(mediaPlayer.getDuration());
 
-        TextView duration = ( TextView ) findViewById(R.id.duration);
-        Log.i("Duration", totalDuration);
-        duration.setText(totalDuration);
-
-        // creating the forward and backward functionality.
-        Button forward = ( Button ) findViewById(R.id.forward);
-        Button backward = ( Button ) findViewById(R.id.backward);
-
-        forward.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                seekbar.setProgress(mediaPlayer.getCurrentPosition() + 5000);
-            }
-        });
-
-        backward.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                seekbar.setProgress(mediaPlayer.getCurrentPosition() - 5000);
-            }
-        });
     }
 
     @Override
